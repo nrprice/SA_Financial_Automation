@@ -126,3 +126,6 @@ dmypy.json
 *.CSV
 *.xlsx
 API_AUTH.py
+.DS_Store
+Spreadsheets/.DS_Store
+Spreadsheets/Warehouse/.DS_Store
