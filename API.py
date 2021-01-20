@@ -3,6 +3,11 @@ from API_AUTH import API_shopify, PW_shopify
 import requests
 import pandas as pd
 
+### To do list
+# Need to validate the input and outputs
+# specifically the Json return and the final df to make sure it's != 0
+
+
 order_dict = {499380322368: {'name': '#1001',
                              'total': '24.99',
                              'country': 'United States',
@@ -25,6 +30,7 @@ def get_orders(first_id, latest_id):
 
         for order in shopify.Order.find(status='any', limit=250, since_id=first_id):
             order_dict.update({order.id: {'name': order.name, 'total': order.total_price,'country': order.billing_address.country, 'date': order.created_at[:10]}})
+
         first_id = list (order_dict.keys())[-1]
 
         # Close the Shopify Session
