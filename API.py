@@ -10,9 +10,9 @@ order_request = requests.get(f'https://{API_shopify}:{PW_shopify}@standing-acrob
 latest_id = order_request.json()['orders'][0]['id']
 
 
-def get_orders(current_id, last_id):
+def get_orders(current_id, latest_id):
     global order_dict
-    while list(order_dict.keys())[-1] != last_id:
+    while list(order_dict.keys())[-1] != latest_id:
         # Login and open a session with a private auth key
         session = shopify.Session('https://standing-acrobatics.com', '2021-01', PW_shopify)
         shopify.ShopifyResource.activate_session(session)
@@ -21,13 +21,12 @@ def get_orders(current_id, last_id):
             order_dict.update({order.id: {'name': order.name, 'total': order.total_price,'country': order.billing_address.country, 'date': order.created_at[:10]}})
         current_id = list (order_dict.keys())[-1]
         shopify.ShopifyResource.clear_session()
-        print (order_dict)
-        return get_orders(current_id, last_id)
+        return get_orders(current_id, latest_id)
 
 get_orders(first_id, latest_id)
 
-df = pd.DataFrame.from_dict(order_dict, orient='index')
-
+df = pd.DataFrame.from_dict(order_dict, orient='index').set_index('name')
+df.to_excel('shopify_automated_sales_data.xlsx')
 print (df)
 
 
