@@ -3,6 +3,9 @@
 This is a tool I developed to help automate monthly reporting for my own business. 
 It's currently designed to be run locally, so because of the paths won't run without editing.
 The initial .csv files aren't included as they contain sensitive financial and customer information.  
+
+## Currently working on
+Have begun working on automating the data gathering, starting with the shopify API. 
 ## Roadmap
 
 <ul>
