@@ -5,7 +5,7 @@ It's currently designed to be run locally, so because of the paths won't run wit
 The initial .csv files aren't included as they contain sensitive financial and customer information.  
 
 ## Currently working on
-Have begun working on automating the data gathering, starting with the shopify API. 
+Have automated the integration of shopify data through the API. Need to retool the import and clean code to reflect that. 
 ## Roadmap
 
 <ul>
