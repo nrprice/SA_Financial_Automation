@@ -3,7 +3,11 @@ from API_AUTH import API_shopify, PW_shopify
 import requests
 import pandas as pd
 
-order_dict = {499380322368: {'name': '#1001', 'total': '24.99', 'country': 'United States', 'date': '2018-06-03'}}
+order_dict = {499380322368: {'name': '#1001',
+                             'total': '24.99',
+                             'country': 'United States',
+                             'date': '2018-06-03'}}
+
 first_id = list(order_dict.keys())[0]
 
 # Manual request to find the most recent order id - used for the exit condition of the recursion
@@ -11,10 +15,10 @@ order_request = requests.get(f'https://{API_shopify}:{PW_shopify}@standing-acrob
 latest_id = order_request.json()['orders'][0]['id']
 
 def get_orders(first_id, latest_id):
+
     global order_dict
 
     while list(order_dict.keys())[-1] != latest_id:
-
         # Login and open a session with a private auth key
         session = shopify.Session('https://standing-acrobatics.com', '2021-01', PW_shopify)
         shopify.ShopifyResource.activate_session(session)
@@ -28,6 +32,10 @@ def get_orders(first_id, latest_id):
         return get_orders(first_id, latest_id)
 
 get_orders(first_id, latest_id)
+
+if len(order_dict) == 0:
+    print ('The dataframe has returned an empty dictionary. Check the inputs.')
+    exit()
 
 df = pd.DataFrame.from_dict(order_dict, orient='index').set_index('name')
 df.to_excel('shopify_automated_sales_data.xlsx')
